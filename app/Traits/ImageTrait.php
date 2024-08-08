@@ -2,7 +2,9 @@
 
 namespace App\Traits;
 
+use Exception;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 trait ImageTrait
@@ -97,7 +99,15 @@ trait ImageTrait
         $extension = $image->getClientOriginalExtension();
 
         $fileName = $name . '-' . time() . '.' . $extension;
-        $image->storeAs($dir, $fileName, $this->diskName());
+
+
+        try {
+         $image->storeAs($dir, $fileName, $this->diskName());
+      } catch (Exception $e) {
+         Log::error('File upload failed: ' . $e->getMessage());
+         // dd($e);
+     }
+
 
         return $fileName;
     }

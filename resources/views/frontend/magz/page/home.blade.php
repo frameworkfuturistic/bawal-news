@@ -5,7 +5,7 @@
 @section('content')
 <section class="home top">
     <div class="container-md">
-        <div class="row" style="margin-top: 56px">
+        <div class="row">
             @if($sidebarPosition === "left" AND $sidebarActive)
                 @include('frontend.magz.template-parts.sidebar')
             @endif

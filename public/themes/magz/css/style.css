@@ -2792,7 +2792,7 @@ aside .ads figcaption {
 
 @media screen and (min-width: 768px) {
   section.home.top {
-    padding-top: 273px;
+    padding-top: 50ps;  /*273px; */
   }
   section.top {
     padding-top: 220px;
