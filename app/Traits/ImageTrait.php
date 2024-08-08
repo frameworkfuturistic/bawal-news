@@ -101,8 +101,11 @@ trait ImageTrait
         $fileName = $name . '-' . time() . '.' . $extension;
 
 
+        $diskName = $this->diskName() ?? 'local';
+
         try {
-         $image->storeAs($dir, $fileName, $this->diskName());
+         // $image->storeAs($dir, $fileName, $this->diskName());
+         $image->storeAs($dir, $fileName, $diskName);
       } catch (Exception $e) {
          Log::error('File upload failed: ' . $e->getMessage());
          // dd($e);
