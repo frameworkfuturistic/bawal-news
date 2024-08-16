@@ -68,6 +68,15 @@ Class ImageHelper
       }
     }
 
+        /**
+     * @return string
+     */
+    public static function headerBanner()
+    {
+         return asset('themes/magz/images/banner.png');
+    }
+    
+
     /**
      * @return string
      */

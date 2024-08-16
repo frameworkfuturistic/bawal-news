@@ -4,7 +4,7 @@
     <div class="container-md">
         <div class="row">
             <div class="hidden-xs col-md-3 col-sm-12">
-                <div class="brand">
+                <div class="brand" style="margin-top: -10px;">
                     <a href="/">
                         <img class="logo_dark" src="{{ $images->webLogoLight() }}" alt="Web Logo" width="200" height="63">
                         <img class="logo_light" src="{{ $images->webLogoDark() }}" alt="Web Logo" width="200" height="63">
@@ -13,8 +13,9 @@
             </div>
 
             <div class="col-md-9 col-sm-12">
-               <h1 class=" text-white" style="font-size: 6em;">Bawal News</h1>
-               <p class="lead text-white">Stay updated with the latest headlines.</p>
+               <img src="{{ \App\Helpers\ImageHelper::headerBanner() }}" alt="BAWAL NEWS" width="400" height="100">
+               {{-- <h1 class=" text-white" style="font-size: 6em;">Bawal News</h1>
+               <p class="lead text-white">Stay updated with the latest headlines.</p> --}}
             </div>
 
 
