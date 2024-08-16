@@ -63,8 +63,9 @@ Class ImageHelper
         if (config('settings.logo_web_light') AND self::isExists('assets', config('settings.logo_web_light'))) {
             return asset('storage/assets/' . config('settings.logo_web_light'));
         } else {
-            return asset('themes/magz/images/logo-light.webp');
-        }
+         // return asset('themes/magz/images/logo-light.webp');
+         return asset('themes/magz/images/logo.png');
+      }
     }
 
     /**
@@ -75,8 +76,9 @@ Class ImageHelper
         if (config('settings.logo_web_dark') AND self::isExists('assets', config('settings.logo_web_dark'))) {
             return asset('storage/assets/' . config('settings.logo_web_dark'));
         } else {
-            return asset('themes/magz/images/logo.webp');
-        }
+         // return asset('themes/magz/images/logo.webp');
+         return asset('themes/magz/images/logo.png');
+      }
     }
     
     /**
