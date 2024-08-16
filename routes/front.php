@@ -10,8 +10,11 @@ use App\Http\Controllers\Front\VideoPostController;
 use App\Http\Controllers\Front\AudioPostController;
 use App\Http\Controllers\SearchController;
 use App\Models\{Post, Term};
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
+use Intervention\Image\ImageManager;
 use Intervention\Image\Laravel\Facades\Image;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -31,12 +34,32 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 //     }
 // })->name('ogi.display');
 
+
+
+// Route::get('ogi/{filename}', function ($filename) {
+//    if (ImageHelper::isExists('public/images', $filename)) {
+//      return Image::read(ImageHelper::imageStoragePathLocation('images') . '/' . $filename)->encode(); //
+//   } else {
+//        return Image::read(public_path('img/cover.png'))->encode();
+//    }
+// })->name('ogi.display');
+
+
 Route::get('ogi/{filename}', function ($filename) {
    if (ImageHelper::isExists('public/images', $filename)) {
-     return Image::read(ImageHelper::imageStoragePathLocation('images') . '/' . $filename)->encode();
-  } else {
-       return Image::read(public_path('img/cover.png'))->encode();
+       $path = ImageHelper::imageStoragePathLocation('images') . '/' . $filename;
+   } else {
+       $path = public_path('img/cover.png');
    }
+
+   if (!File::exists($path)) {
+      abort(404);
+  }
+
+  $type = File::mimeType($path);
+
+  return response()->file($path, ['Content-Type' => $type]);
+
 })->name('ogi.display');
 
 
