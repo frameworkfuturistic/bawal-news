@@ -12,8 +12,8 @@
                 </div>
             </div>
 
-            <div class="col-md-6 col-sm-12">
-               <h1 class="display-1 text-white">Bawal News</h1>
+            <div class="col-md-9 col-sm-12">
+               <h1 class=" text-white" style="font-size: 6em;">Bawal News</h1>
                <p class="lead text-white">Stay updated with the latest headlines.</p>
             </div>
 

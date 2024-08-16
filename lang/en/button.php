@@ -63,4 +63,5 @@ return array (
   'use_this_image'           => 'Use this image',
   'yes'                      => 'Yes',
   'yes_delete_it'            => 'Yes, delete it!',
+  'add_new_breaking'         => 'Add Breaking News',
 );

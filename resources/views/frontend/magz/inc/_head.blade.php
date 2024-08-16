@@ -5,6 +5,7 @@
 <meta name="author" content="{{ config('settings.company_name') }}">
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
+
 {!! SEO::generate() !!}
 @empty(config('settings.favicon'))
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicons/apple-touch-icon.png') }}">

@@ -358,7 +358,13 @@ return [
                     'url'    => 'admin/manage/tags',
                     'can'    => 'read-tags',
                     'active' => ['admin/manage/tags'],
+                ],
+                [
+                  'text'   => 'breaking_news',
+                  'url'    => 'admin/manage/breaking',
+                  'active' => ['admin/manage/breaking'],
                 ]
+
             ]
         ],
         [

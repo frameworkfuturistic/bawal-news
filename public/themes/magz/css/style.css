@@ -2923,7 +2923,7 @@ aside .ads figcaption {
 }
 @media screen and (max-width: 768px) {
   section.home.top {
-    padding-top: 273px;
+    padding-top: 506px;
   }
   section.top {
     padding-top: 274px;
@@ -2998,7 +2998,7 @@ aside .ads figcaption {
     height: 100%;
     top: 0;
     right: -320px;
-    background-color: #fff;
+    background-color: cornflowerblue;
     z-index: 3000;
     overflow: auto;
     transition: all 0.5s;

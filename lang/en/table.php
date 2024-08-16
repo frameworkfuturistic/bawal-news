@@ -49,4 +49,6 @@ return array (
   'url'              => 'URL',
   'users'            => 'Users',
   'version'          => 'Version',
+  'breaking_news'    => 'Breaking News',
+  'order_serial'     => 'Order Sl',
 );

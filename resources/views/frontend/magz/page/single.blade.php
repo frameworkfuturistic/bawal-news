@@ -40,7 +40,7 @@
                         {!! $post->post_summary !!}
                         </div>
                         @if($post->post_type == "page" OR $post->post_type == "post")
-                            @if(!empty($post->post_image) && App\Helpers\ImageHelper::isExists('images', $post->post_image) || App\Helpers\PostHelper::isImageUrlAvailable($post))
+                            @if(!empty($post->post_image) && App\Helpers\ImageHelper::isExists('public/images', $post->post_image) || App\Helpers\PostHelper::isImageUrlAvailable($post))
                             <figure class="figure d-block text-center mb-4">
                                 <img src="{{ $postHelper->displayThumbnailForSinglePost($post) }}" class="figure-img img-fluid rounded" alt="{{ $post->post_image }}" width="736" height="552">
                                 <figcaption class="figure-caption">{!! $postHelper->getPostThumbnailCaption($post->post_image_meta) !!}</figcaption>

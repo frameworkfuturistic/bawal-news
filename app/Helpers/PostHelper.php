@@ -69,7 +69,7 @@ Class PostHelper
         }
 
         if (!empty($post->post_image)) {
-            if (ImageHelper::isExists('images' . $path, $post->post_image)) {
+            if (ImageHelper::isExists('public/images' . $path, $post->post_image)) {
                 $image = asset('storage/images'. $path . $post->post_image);
             } else {
                 $image = asset('img/noimage.webp');
@@ -115,7 +115,7 @@ Class PostHelper
         $image = asset('img/noimage.webp');
 
         if (!empty($post->post_image)) {
-            if (ImageHelper::isExists('images/', $post->post_image)) {
+            if (ImageHelper::isExists('public/images/', $post->post_image)) {
                 $image = asset('storage/images/' . $post->post_image);
             } else {
                 $image = asset('img/noimage.webp');

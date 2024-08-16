@@ -138,6 +138,12 @@ class RoleSeeder extends Seeder
         $approveComments = Permission::create(['name' => 'approve-comments']);
         $deleteComments = Permission::create(['name' => 'delete-comments']);
 
+        $readBreaking   = Permission::create(['name' => 'read-breaking']);
+        $addBreaking    = Permission::create(['name' => 'add-breaking']);
+        $replyBreaking    = Permission::create(['name' => 'reply-breaking']);
+        $updateBreaking = Permission::create(['name' => 'update-breaking']);
+        $approveBreaking = Permission::create(['name' => 'approve-breaking']);
+        $deleteBreaking = Permission::create(['name' => 'delete-breaking']);
 
         // Role
         Role::create(['name' => 'super-admin'])->givePermissionTo(Permission::all());
@@ -166,7 +172,8 @@ class RoleSeeder extends Seeder
             $readAnalytics,
             $readProfile, $updateProfile,
             $readTranslation, $updateTranslation,
-            $readComments, $addComments, $replyComments, $updateComments, $approveComments, $deleteComments]);
+            $readComments, $addComments, $replyComments, $updateComments, $approveComments, $deleteComments,
+            $readBreaking, $addBreaking, $replyBreaking, $updateBreaking, $approveBreaking, $deleteBreaking]);
 
         Role::create(['name' => 'author'])->givePermissionTo([
             $readPosts, $addPosts, $updatePosts, $deletePosts,

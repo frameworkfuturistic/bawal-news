@@ -23,13 +23,22 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 */
 
 // -------------------------------- Open Graph image  --------------------------------
+// Route::get('ogi/{filename}', function ($filename) {
+//     if (ImageHelper::isExists('assets', $filename)) {
+//       return Image::read(ImageHelper::imageStoragePathLocation('assets') . '/' . $filename)->encode();
+//    } else {
+//         return Image::read(public_path('img/cover.png'))->encode();
+//     }
+// })->name('ogi.display');
+
 Route::get('ogi/{filename}', function ($filename) {
-    if (ImageHelper::isExists('assets', $filename)) {
-        return Image::read(ImageHelper::imageStoragePathLocation('assets') . '/' . $filename)->encode();
-    } else {
-        return Image::read(public_path('img/cover.png'))->encode();
-    }
+   if (ImageHelper::isExists('public/images', $filename)) {
+     return Image::read(ImageHelper::imageStoragePathLocation('images') . '/' . $filename)->encode();
+  } else {
+       return Image::read(public_path('img/cover.png'))->encode();
+   }
 })->name('ogi.display');
+
 
 // ---------------------------------------- Feed ----------------------------------------
 Route::feeds();

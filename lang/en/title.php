@@ -92,4 +92,6 @@ return [
     'web_information'                => 'Web Information',
     'web_permalinks'                 => 'Web Permalinks',
     'web_properties'                 => 'Web Properties',
+    'breaking_news'                  => 'Breaking News',
+    'all_breakings'                  => 'All Breaking News',
 ];
