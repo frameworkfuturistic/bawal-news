@@ -19,7 +19,7 @@
                         <li class="breadcrumb-item active" aria-current="page">{{ $post->terms()->category()->first()->name }}</li>
                     @endif
                 </ol>
-                <article class="article main-article">
+                <article class="article main-article" style="margin-top: 50px;">
                     <header>
                         <h1>{{ $post->post_title }}</h1>
                         <ul class="details">
