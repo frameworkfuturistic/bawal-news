@@ -19,7 +19,6 @@ class Breaking extends Model
     */
    protected $fillable = [
        'breaking_news',
-       'order_serial'
    ];
 
    /**
@@ -30,33 +29,6 @@ class Breaking extends Model
        return 'breaking_news';
    }
 
-   // /**
-   //  * children
-   //  *
-   //  * @return void
-   //  */
-   // public function children()
-   // {
-   //     return $this->hasMany(self::class, 'parent');
-   // }
-
-   // /**
-   //  * parent
-   //  *
-   //  * @return void
-   //  */
-   // public function parentId()
-   // {
-   //     return $this->belongsTo(self::class, 'parent');
-   // }
-
-   // /**
-   //  * @return BelongsToMany
-   //  */
-   // public function posts()
-   // {
-   //     return $this->belongsToMany(Post::class)->withTimestamps();
-   // }
 
    /**
     * @param $query

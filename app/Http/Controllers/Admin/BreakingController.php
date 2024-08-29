@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\BreakingDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BreakingRequest;
-use App\Models\{Language, Term};
-use App\Services\TermService;
+use App\Models\{Breaking, Language, Term};
+use App\Services\BreakingService;
 use Illuminate\Http\{JsonResponse, Request, Response};
 use Illuminate\Support\Facades\{Auth, Gate, Validator};
 use Illuminate\Validation\Rule;
@@ -14,7 +14,7 @@ use Illuminate\Validation\Rule;
 
 class BreakingController extends Controller
 {
-   private $termService;
+   private $breakingService;
     
    /**
     * __construct
@@ -22,9 +22,9 @@ class BreakingController extends Controller
     * @param  mixed $termService
     * @return void
     */
-   public function __construct(TermService $termService)
+   public function __construct(BreakingService $breakingService)
    {
-       $this->termService = $termService;
+       $this->breakingService = $breakingService;
 
       //  $this->middleware('permission:read-tags', ['except' => ['ajaxSearch']]);
       //  $this->middleware('permission:add-tags', ['only' => ['store']]);
@@ -38,8 +38,10 @@ class BreakingController extends Controller
     */
    public function ajaxSearch(){
        $language = request('lang');
-       $data = $this->termService->showTermForSelectOption(10, $language, 'tag');
-       return response()->json($data);
+      //  $data = $this->termService->showTermForSelectOption(10, $language, 'tag');
+      //  return response()->json($data);
+      $data = $this->breakingService->showTermForSelectOption(10, $language, 'tag');
+      return response()->json($data);
    }
    
    /**
@@ -49,13 +51,16 @@ class BreakingController extends Controller
     */
    public function ajaxCategorySearch()
    {
-       if(request()->filled('q')) {
-           $data = Term::select('name','id')->tag()->where('language_id', request('lang'))->searchName(request()->get('q'))->limit(5)->get();
-       } else {
-           $data = Term::select('name','id')->tag()->where('language_id', request('lang'))->limit(5)->get();
-       }
+      //  if(request()->filled('q')) {
+      //      $data = Term::select('name','id')->tag()->where('language_id', request('lang'))->searchName(request()->get('q'))->limit(5)->get();
+      //  } else {
+      //      $data = Term::select('name','id')->tag()->where('language_id', request('lang'))->limit(5)->get();
+      //  }
 
-       return response()->json($data);
+      //  return response()->json($data);
+
+      $records = $this->breakingService->getBreakingNews();
+      return response()->json($records);
    }
 
    /**
@@ -82,7 +87,8 @@ class BreakingController extends Controller
          //   'name'  => ['required', 'min:3', Rule::unique('terms', 'name')->where(function ($query) use ($request) {
          //       return $query->whereTaxonomy('tag')->where('language_id', $request->language);
          //   })]
-         'name'  => ['required', 'min:3']
+         // 'name'  => ['required', 'min:3'],
+         'description'  => ['required', 'min:3'],
        ]);
 
        $resp = [];
@@ -91,7 +97,7 @@ class BreakingController extends Controller
            $resp[] = ['trans' => $validator->errors()];
        }
 
-       return $this->termService->save($request, 'tag', $resp);
+       return $this->breakingService->save($request, $resp);
    }
 
    /**
@@ -103,21 +109,21 @@ class BreakingController extends Controller
     */
    public function update(Request $request, $id)
    {
-       $term = Term::tag()->find($id);
+      //  $term = Term::tag()->find($id);
 
-       $validator = Validator::make(request()->all(), [
-           'name' => ['required','min:3', Rule::unique('terms', 'name')->where(function ($query) use ($request) {
-               return $query->whereTaxonomy('tag')->where('language_id', $request->language);
-           })->ignore($term->id)]
-       ]);
+      //  $validator = Validator::make(request()->all(), [
+      //      'name' => ['required','min:3', Rule::unique('terms', 'name')->where(function ($query) use ($request) {
+      //          return $query->whereTaxonomy('tag')->where('language_id', $request->language);
+      //      })->ignore($term->id)]
+      //  ]);
 
-       $resp = [];
+      //  $resp = [];
 
-       if ($validator->fails()) {
-           $resp[] = [ 'trans' => $validator->errors() ];
-       }
+      //  if ($validator->fails()) {
+      //      $resp[] = [ 'trans' => $validator->errors() ];
+      //  }
 
-       return $this->termService->modify($request, $term, 'tag', $resp);
+      //  return $this->termService->modify($request, $term, 'tag', $resp);
    }
 
    /**
@@ -128,13 +134,13 @@ class BreakingController extends Controller
     */
    public function destroy($id)
    {
-       if (!Gate::allows('delete-tags')) {
-           return response()->json(['error' => __('message.dont_have_permission')]);
-       }
+      //  if (!Gate::allows('delete-tags')) {
+      //      return response()->json(['error' => __('message.dont_have_permission')]);
+      //  }
 
-       $term = Term::tag()->find($id);
+       $record = Breaking::tag()->find($id);
 
-       $this->termService->remove($term, 'tag');
+       $this->breakingService->remove($record);
 
        return response()->json(['success' => __('message.deleted_successfully')]);
    }
@@ -146,16 +152,16 @@ class BreakingController extends Controller
     */
    public function massdestroy()
    {
-       if (! Gate::allows('delete-tags')) {
-           return response()->json(['error' =>  __('message.dont_have_permission')]);
-       }
+      //  if (! Gate::allows('delete-tags')) {
+      //      return response()->json(['error' =>  __('message.dont_have_permission')]);
+      //  }
 
-       $tags  = $this->termService->massRemove('tag');
+      //  $tags  = $this->termService->massRemove('tag');
 
-       if($tags->delete()) {
-           return response()->json(['success' =>  __('message.deleted_successfully')]);
-       } else {
-           return response()->json(['error' =>  __('message.deleted_not_successfully')]);
-       }
+      //  if($tags->delete()) {
+      //      return response()->json(['success' =>  __('message.deleted_successfully')]);
+      //  } else {
+      //      return response()->json(['error' =>  __('message.deleted_not_successfully')]);
+      //  }
    }
 }

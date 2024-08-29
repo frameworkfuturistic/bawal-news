@@ -3,11 +3,11 @@
         @csrf
         <input id="tagLanguage" type="hidden" name="language" value="{{ $language }}">
         <div class="card-body">
-            <div class="form-group">
-                <label for="name">{{ __('form.name') }}</label>
-                <input type="text" name="name" class="form-control" id="name" placeholder="{{ __('form.placeholder_name') }}" required autofocus>
+            {{-- <div class="form-group">
+                <label for="name">{{ __('form.breaking_news') }}</label>
+                <input type="text" name="breaking_news" class="form-control" id="name" placeholder="{{ __('form.placeholder_name') }}" required autofocus>
                 <div class="invalid-feedback msg-error-name"></div>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <label for="name">{{ __('form.description') }}</label>
                 <textarea name="description" class="form-control" rows="3" placeholder="{{ __('form.placeholder_description') }}" id="description"></textarea>

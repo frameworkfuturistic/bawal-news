@@ -123,12 +123,12 @@ trait ImageTrait
      */
     public function uploadCategoryImage($requestImage)
     {
-        $file = $requestImage->getClientOriginalName();
-        $name = pathinfo($file, PATHINFO_FILENAME);
-        $extension = $requestImage->getClientOriginalExtension();
+        $file = $requestImage->getClientOriginalName(); // Get the original name of the uploaded file
+        $name = pathinfo($file, PATHINFO_FILENAME); // Extract the file name without the extension
+        $extension = $requestImage->getClientOriginalExtension(); // Get the file extension (e.g., jpg, png, etc.)
 
         $fileName = $name . '-' . time() . '.' . $extension;
-        $requestImage->storeAs('images', $fileName, $this->diskName());
+        $requestImage->storeAs('images', $fileName, $this->diskName()); // Store the file in the 'images' directory on the specified disk (e.g., local, s3)
 
         return $fileName;
     }

@@ -27,18 +27,13 @@ class BreakingDataTable extends DataTable
     {
       return datatables()
       ->eloquent($query)
-      ->addColumn('checkbox', function($query){
-          return '<div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input user_checkbox" id="checkbox'.$query->id.'" name="user_checkbox[]" value="'.$query->id.'"><label class="custom-control-label" for="checkbox'.$query->id.'"></label>
-          </div>';
-      })
       ->addColumn('action', function ($query) {
           $action = [
               'table' => 'user-table',
               'model' => $query,
           ];
-          $action['del_url'] = route('users.destroy', $query->id);
-          $action['edit_url'] = route('users.edit', $query->id);
+          $action['del_url'] = route('breaking.destroy', $query->id);
+         //  $action['edit_url'] = route('users.edit', $query->id);
 
           return view('layouts.partials._action', $action);
       });
@@ -58,8 +53,7 @@ class BreakingDataTable extends DataTable
             $reqLanguage = request('filter');
         }
 
-        return $model->select('id', 'breaking_news', 'order_serial')
-            ->orderBy('order_serial','asc')
+        return $model->select('id', 'breaking_news')
             ->newQuery();
     }
 
@@ -72,7 +66,7 @@ class BreakingDataTable extends DataTable
     {
         $script = 'data.filter = $("#custom-filter").val();';
         return $this->builder()
-            ->setTableId('tag-table')
+            ->setTableId('breaking-table')
             ->columns($this->getColumns())
             ->minifiedAjax($url='', $script, [])
             ->dom("<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" .
@@ -125,21 +119,6 @@ class BreakingDataTable extends DataTable
                         sweetalert2(table, url);
                     })
 
-                    $("#bulk_delete").on("click", function() {
-                        let url = $(this).data("url");
-                        let table = "tag-table";
-                        let selectClass = "tag_checkbox";
-                        multiDelCheckbox(table, url, selectClass);
-                    })
-
-                    $("#selectAll").on("click", function(e) {
-                        if ($(this).is( ":checked" )) {
-                            $(".tag_checkbox").prop("checked",true);
-                        } else {
-                            $(".tag_checkbox").prop("checked",false);
-                        }
-                    })
-
                      if(document.getElementById("translation")){
                         document.getElementById("translation").removeAttribute("disabled");
                     }
@@ -155,20 +134,9 @@ class BreakingDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::make('checkbox')
-                ->title('<div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="selectAll"><label class="custom-control-label" for="selectAll"></label></div>')
-                ->footer('<button type="button" name="bulk_delete" id="bulk_delete" class="btn btn btn-xs btn-danger" data-url="'.route('tags.mass.destroy').'">'.__('button.delete').'</button>')
-                ->titleAttr('')
-                ->addClass('text-center')
-                ->orderable(false)
-                ->searchable(false)
-                ->width(3),
             Column::make('id')->title(__('table.id'))
                 ->orderable(false),
             Column::make('breaking_news')->title(__('table.breaking_news'))
-                ->orderable(false),
-            Column::make('order_serial')->title(__('table.order_serial'))
                 ->orderable(false),
             Column::computed('action')->title(__('table.action'))
                 ->addClass('text-center')

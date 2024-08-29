@@ -40,7 +40,7 @@ Class SeoHelper
      */
     public static function getMeta($title = null, $description = null, $keyword = null, $url = null)
     {
-        SEOTools::setTitle($title ?: config('settings.site_name'));
+        SEOTools::setTitle($title ?: config('settings.site_name'),false);
         SEOTools::setDescription($description ?: config('settings.site_description'));
         SEOTools::metatags()->setKeywords($keyword ?: config('settings.meta_keyword'));
         SEOTools::setCanonical($url?: config('settings.site_url'));
