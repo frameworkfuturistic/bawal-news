@@ -12,13 +12,26 @@
          </div>
          <div class="news-ticker">
              <ul>
+                 @foreach($breakingNews as $news)
+                     <li>Breaking News: {{ $news->breaking_news }}</li>
+                 @endforeach
+             </ul>
+         </div>
+     </div>
+
+      {{-- <div class="breaking-news-container">
+         <div class="label">
+             <span>Breaking News</span>
+         </div>
+         <div class="news-ticker">
+             <ul>
                  <li>Headline 1: Major event happening now!</li>
                  <li>Headline 2: Something significant just happened.</li>
                  <li>Headline 3: Important updates on the current situation.</li>
                  <!-- Add more headlines as needed -->
              </ul>
          </div>
-     </div>
+     </div> --}}
 
       {{-- ================ --}}
 

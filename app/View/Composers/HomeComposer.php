@@ -4,6 +4,7 @@ namespace App\View\Composers;
 
 use App\Helpers\ThemeHelper;
 use App\Helpers\LocalizationHelper;
+use App\Models\Breaking;
 use App\Models\Theme;
 use App\Services\ArticleService;
 use Illuminate\Support\Arr;
@@ -56,6 +57,7 @@ class HomeComposer
         $sidebar    = $sidebarCustom ? $setting->sidebar['widget'] : $generalLayout->sidebar['widget'];
         $footer = $footerCustom ?  $setting->footer['widget']['section'] :  $generalLayout->footer['widget']['section'];
 
-        $view->with(compact('body', 'bottomPost', 'sidebar', 'footer', 'sidebarActive', 'footerActive', 'bottomPostActive', 'sidebarPosition', 'page'));
+        $breakingNews = Breaking::orderBy('created_at', 'desc')->get();
+        $view->with(compact('body', 'bottomPost', 'sidebar', 'footer', 'sidebarActive', 'footerActive', 'bottomPostActive', 'sidebarPosition', 'page','breakingNews'));
     }
 }
