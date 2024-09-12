@@ -13,7 +13,7 @@
          <div class="news-ticker">
              <ul>
                  @foreach($breakingNews as $news)
-                     <li>Breaking News: {{ $news->breaking_news }}</li>
+                     <li>{{ $news->breaking_news }}</li>
                  @endforeach
              </ul>
          </div>
