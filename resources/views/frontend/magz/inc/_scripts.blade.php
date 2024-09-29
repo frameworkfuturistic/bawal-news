@@ -15,8 +15,9 @@ function toSystemMode() {
 }
 
 function toDarkMode() {
-    localStorage.theme = 'dark';
-    window.updateTheme();
+   // localStorage.theme = 'dark';
+   localStorage.theme = 'light';
+   window.updateTheme();
 }
 
 function toLightMode() {
