@@ -21,7 +21,10 @@ class Links extends Component
         $this->active = $widgetData['active'];
         $this->links = json_decode(config('settings.links'));
         $this->widgetData = $widgetData;
-        
+
+      // $this->active = $widgetData['active'] ?? null;
+      // $this->links = json_decode(config('settings.links'),true);
+      // $this->widgetData = $widgetData ?? [];
     }
 
     /**

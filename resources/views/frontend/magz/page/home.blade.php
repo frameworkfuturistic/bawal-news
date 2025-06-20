@@ -3,23 +3,29 @@
 @inject('themeHelper', 'App\Helpers\ThemeHelper')
 
 @section('content')
-<section class="home top">
-    <div class="container-md">
-      {{-- Anil Mishra --}}
-      <div class="breaking-news-container">
-         <div class="label">
-             <span>Breaking News</span>
-         </div>
-         <div class="news-ticker">
-             <ul>
-                 @foreach($breakingNews as $news)
+   <section class="home top">
+      <div class="container-md">
+         {{-- Anil Mishra --}}
+         <div class="breaking-news-container">
+            <div class="label">
+               <span>Breaking News</span>
+            </div>
+            <div class="news-ticker">
+               <ul>
+                  @foreach ($breakingNews as $news)
                      <li>{{ $news->breaking_news }}</li>
-                 @endforeach
-             </ul>
+                  @endforeach
+                  @foreach ($breakingNews as $news)
+                     <li>{{ $news->breaking_news }}</li>
+                  @endforeach
+                  @foreach ($breakingNews as $news)
+                     <li>{{ $news->breaking_news }}</li>
+                  @endforeach
+               </ul>
+            </div>
          </div>
-     </div>
 
-      {{-- <div class="breaking-news-container">
+         {{-- <div class="breaking-news-container">
          <div class="label">
              <span>Breaking News</span>
          </div>
@@ -33,42 +39,45 @@
          </div>
      </div> --}}
 
-      {{-- ================ --}}
+         {{-- ================ --}}
 
-      <div class="row">
-            @if($sidebarPosition === "left" AND $sidebarActive)
-                @include('frontend.magz.template-parts.sidebar')
+         <div class="row">
+            @if ($sidebarPosition === 'left' and $sidebarActive)
+               @include('frontend.magz.template-parts.sidebar')
             @endif
-            <div style="background-color: #eff3f6;" class="col-lg-8 col-md-12 col-sm-12 col @if($sidebarActive === false) offset-lg-2 @endif">
-                @foreach($body as $widgetName => $widgetData)
-                    @if($widgetName != 'bottom_post')
-                        @if (Arr::first(Str::of($widgetName)->explode('-')) == 'section')
-                            @if ($widgetData['active'] == 'true')
-                            <x-dynamic-component :component="$themeHelper->getComponentName($widgetName)" page="home" layout="body" :widgetName="$widgetName" :widgetData="$widgetData['widget']" :localeId="$localeId"/>
-                            @endif
-                        @else
-                            @if ($widgetData['active'] == 'true')
-                            <x-dynamic-component :component="$themeHelper->getComponentName($widgetName)" page="home" layout="body" :widgetName="$widgetName" :widgetData="$widgetData" :localeId="$localeId"/>
-                            @endif
+            <div style="background-color: #eff3f6;"
+               class="col-lg-8 col-md-12 col-sm-12 col @if ($sidebarActive === false) offset-lg-2 @endif">
+               @foreach ($body as $widgetName => $widgetData)
+                  @if ($widgetName != 'bottom_post')
+                     @if (Arr::first(Str::of($widgetName)->explode('-')) == 'section')
+                        @if ($widgetData['active'] == 'true')
+                           <x-dynamic-component :component="$themeHelper->getComponentName($widgetName)" page="home" layout="body" :widgetName="$widgetName"
+                              :widgetData="$widgetData['widget']" :localeId="$localeId" />
                         @endif
-                    @endif
-                @endforeach
+                     @else
+                        @if ($widgetData['active'] == 'true')
+                           <x-dynamic-component :component="$themeHelper->getComponentName($widgetName)" page="home" layout="body" :widgetName="$widgetName"
+                              :widgetData="$widgetData" :localeId="$localeId" />
+                        @endif
+                     @endif
+                  @endif
+               @endforeach
             </div>
-            @if($sidebarPosition === "right" AND $sidebarActive)
-                @include('frontend.magz.template-parts.sidebar')
+            @if ($sidebarPosition === 'right' and $sidebarActive)
+               @include('frontend.magz.template-parts.sidebar')
             @endif
-        </div>
-    </div>
-</section>
+         </div>
+      </div>
+   </section>
 
-@if($bottomPostActive)
-    <x-bottom-post :widgetData="$bottomPost" :localeId="$localeId"/>
-@endif
+   @if ($bottomPostActive)
+      <x-bottom-post :widgetData="$bottomPost" :localeId="$localeId" />
+   @endif
 
 @endsection
 
 @push('scripts')
-    <script>
-        let $target_end=$(".best-of-the-week");
-    </script>
+   <script>
+      let $target_end = $(".best-of-the-week");
+   </script>
 @endpush

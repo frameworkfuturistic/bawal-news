@@ -182,63 +182,114 @@ Class PageService
      *
      * @return void
      */
-    public static function pageQuery() {
-        $id = LocalizationHelper::getCurrentLocaleId();
-
-        /** @var \App\Models\User */
-        $currentUser = Auth::user();
-
-        $query = Post::with(['user.roles', 'language'])
+    public static function pageQuery()
+    {
+         $id = LocalizationHelper::getCurrentLocaleId();
+         $query = Post::with(['user.roles', 'language'])
             ->page()
             ->where('post_language', $id)
             ->publish();
 
-        if (Auth::check()) {
-            if ($currentUser->hasRole('super-admin')) {
-                return $query;
-            } else {
-                if ($currentUser->can('read-private-post')) {
-                    if ($currentUser->hasRole('admin')) {
-                        return $query->where(function($query_post){
-                            foreach($query_post->with('user.roles')->get() as $post) {
-                                if ($post->user->getRoleNames()->first()== 'admin') {
-                                    $query_post->public()
-                                        ->orWhere(function($q) {
-                                            $q->private()->where('post_author', Auth::id());
-                                        });
-                                } else{
-                                    $query_post->public();
-                                }
-                            }
-                        });
-                    }
-                } else {
-                    if($currentUser->hasRole(['author'])) {
-                        return $query->where(function($query_post){
-                            foreach($query_post->with('user.roles')->get() as $post) {
-                                if ($post->user->getRoleNames()->first() == 'author') {
-                                    $query_post->public()
-                                        ->orWhere(function($q) {
-                                            $q->private()->where('post_author', Auth::id());
-                                        });
-                                } else {
-                                    $query_post->public();
-                                }
-                            }
-                        });
-                    } else{
-                        return $query->public()
-                            ->orWhere(function($query_post) {
-                                $query_post->private()
-                                    ->where('post_author', Auth::id());
-                            });
-                    }
-                }
-            }
-        } else {
-            return $query->public();
-        }
-    }
+         $currentUser = Auth::user();
+
+         if (!Auth::check()) {
+            return $query->public(); // guest users: only public
+         }
+
+         if ($currentUser->hasRole('super-admin')) {
+            return $query; // full access
+         }
+
+         if ($currentUser->can('read-private-post') && $currentUser->hasRole('admin')) {
+            // Admins with permission: public + own private
+            $query = $query->where(function ($q) {
+                  $q->public()
+                  ->orWhere(function ($sub) {
+                        $sub->private()->where('post_author', Auth::id());
+                  });
+            });
+
+            // View SQL and bindings (for debugging)
+            // dd(['sql' => $query->toSql(), 'bindings' => $query->getBindings()]);
+            return $query;
+         }
+
+         if ($currentUser->hasRole('author')) {
+            // Authors: public + own private
+            return $query->where(function ($q) {
+                  $q->public()
+                  ->orWhere(function ($sub) {
+                        $sub->private()->where('post_author', Auth::id());
+                  });
+            });
+         }
+
+         // Other roles: public + own private
+         return $query->where(function ($q) {
+            $q->public()
+               ->orWhere(function ($sub) {
+                  $sub->private()->where('post_author', Auth::id());
+               });
+         });
+      }
+
+   //  public static function pageQuery() {
+   //      $id = LocalizationHelper::getCurrentLocaleId();
+
+   //      /** @var \App\Models\User */
+   //      $currentUser = Auth::user();
+
+   //      $query = Post::with(['user.roles', 'language'])
+   //          ->page()
+   //          ->where('post_language', $id)
+   //          ->publish();
+
+   //      if (Auth::check()) {
+   //          if ($currentUser->hasRole('super-admin')) {
+   //              return $query;
+   //          } else {
+   //              if ($currentUser->can('read-private-post')) {
+   //                  if ($currentUser->hasRole('admin')) {
+   //                      return $query->where(function($query_post){
+   //                          foreach($query_post->with('user.roles')->get() as $post) {
+   //                              if ($post->user->getRoleNames()->first()== 'admin') {
+   //                                  $query_post->public()
+   //                                      ->orWhere(function($q) {
+   //                                          $q->private()->where('post_author', Auth::id());
+   //                                      });
+   //                              } else{
+   //                                  $query_post->public();
+   //                              }
+   //                          }
+   //                      });
+   //                  }
+   //              } else {
+   //                  if($currentUser->hasRole(['author'])) {
+   //                      return $query->where(function($query_post){
+   //                          foreach($query_post->with('user.roles')->get() as $post) {
+   //                              if ($post->user->getRoleNames()->first() == 'author') {
+   //                                  $query_post->public()
+   //                                      ->orWhere(function($q) {
+   //                                          $q->private()->where('post_author', Auth::id());
+   //                                      });
+   //                              } else {
+   //                                  $query_post->public();
+   //                              }
+   //                          }
+   //                      });
+   //                  } else{
+   //                      return $query->public()
+   //                          ->orWhere(function($query_post) {
+   //                              $query_post->private()
+   //                                  ->where('post_author', Auth::id());
+   //                          });
+   //                  }
+   //              }
+   //          }
+   //      } else {
+   //          return $query->public();
+   //      }
+   //  }
     
     /**
      * pageCount
